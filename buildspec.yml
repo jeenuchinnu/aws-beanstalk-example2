@@ -11,11 +11,16 @@ phases:
   build:
     commands:
     - echo "Entered build phase"
-    - mvn clean install
+    - mvn compile
   post_build:
     commands:
     - echo "Entered the post-build phase"
+    - mvn package
+    - mkdir artifact
+    - unzip target/aws-elastic-beanstalk-example-2-0.0.1-SNAPSHOT.war -d artifact/
 artifacts:
   files:
-    - '**/*'
-  base-directory: 'target'
+    - artifact/**/*
+cache:
+  paths:
+    - '/root/.m2/**/*'
